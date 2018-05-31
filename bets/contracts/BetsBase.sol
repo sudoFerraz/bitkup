@@ -31,6 +31,24 @@ contract BetsBase {
 
     mapping (bytes32 => Match) Matches;
 
+    Match[] matches;
+
+    function Create_Match(string _team0Name, string _team1Name) returns (bytes32) {
+        Match memory _match = Match({
+            match_id: sha256(block.timestamp),
+            team0Name: _team0Name,
+            team1Name: _team1Name,
+            team0BetSum: 0,
+            team1BetSum: 1,
+            state: true,
+            TAX: 10
+        });
+        uint256 newMatchID = matches.push(_match) - 1;
+    }
+
+
+
+
     function CreateMatch(string _team0Name, string _team1Name) returns (bytes32){
         bytes32 matchid = sha256(block.timestamp);
         Matches[matchid].team0Name = _team0Name;
@@ -47,6 +65,18 @@ contract BetsBase {
     function proofFor(string document) constant returns (bytes32) {
         return sha256(document);
     }
+
+    function getMatch(uint _index) constant returns (string _team1Name, bytes32 _matchID, string _team0Name) {
+        Match storage _match = matches[_index];
+        return (_match.team1Name, _match.match_id, _match.team0Name);
+    
+    }
+
+    function getLength() public view returns (uint){
+        return (matches.length);
+
+    }
+
 
 
 
