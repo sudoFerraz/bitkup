@@ -29,7 +29,7 @@ contract BetsBase {
     
     }
 
-    mapping (bytes32 => Match) Matches;
+    mapping (bytes32 => uint256) Matches_Index;
 
     Match[] matches;
 
@@ -43,32 +43,18 @@ contract BetsBase {
             state: true,
             TAX: 10
         });
-        uint256 newMatchID = matches.push(_match) - 1;
+        uint256 newMatchIndex = matches.push(_match) - 1;
+        Matches_Index[_match.match_id] = newMatchIndex;
     }
-
-
-
-
-    function CreateMatch(string _team0Name, string _team1Name) returns (bytes32){
-        bytes32 matchid = sha256(block.timestamp);
-        Matches[matchid].team0Name = _team0Name;
-        Matches[matchid].team1Name = _team1Name;
-        Matches[matchid].team0BetSum = 0;
-        Matches[matchid].team1BetSum = 0;
-        Matches[matchid].state = true;
-        Matches[matchid].TAX = 10;
-        return (matchid);
-    }
-
 
 
     function proofFor(string document) constant returns (bytes32) {
         return sha256(document);
     }
 
-    function getMatch(uint _index) constant returns (string _team1Name, bytes32 _matchID, string _team0Name) {
+    function getMatch(uint _index) constant returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum) {
         Match storage _match = matches[_index];
-        return (_match.team1Name, _match.match_id, _match.team0Name);
+        return (_match.team1Name, _match.team0Name, _match.match_id, _match.team0BetSum, _match.team1BetSum);
     
     }
 
@@ -77,7 +63,18 @@ contract BetsBase {
 
     }
 
+    function getIndexById(bytes32 _matchid) constant returns (uint256) {
+        uint256 Match_Index = Matches_Index[_matchid];
+        return (Match_Index);
 
+    }
+
+
+    function makeBet(bytes32 _matchid) payable external {
+        if (msg.value == 0) throw;
+        
+
+    }
 
 
 }
