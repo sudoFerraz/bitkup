@@ -4,6 +4,8 @@ pragma solidity ^0.4.18;
 
 contract BetsBase {
     
+    event NewBet(bool team0, address indexed from, uint amount);
+    
     event MatchCreation(uint256 match_id);
 
     event BetMade(uint256 match_id, address indexed from, bool forTeam, uint amount);
@@ -39,7 +41,7 @@ contract BetsBase {
             team0Name: _team0Name,
             team1Name: _team1Name,
             team0BetSum: 0,
-            team1BetSum: 1,
+            team1BetSum: 0,
             state: true,
             TAX: 10
         });
@@ -70,11 +72,35 @@ contract BetsBase {
     }
 
 
-    function makeBet(bytes32 _matchid) payable external {
-        if (msg.value == 0) throw;
+    function makeBet(bytes32 _matchid, bool team0) payable external {
+        require(msg.value > 0);
+        uint256 _match_index = getIndexById(_matchid);
+        Match storage _match = matches[_match_index];
+        uint prevSum;
+        if (team0 == true) {
+            prevSum = _match.team0BetSum;
+            require((prevSum + msg.value) >= prevSum);
+            assert(_match.team0BetSum >= prevSum);
+            _match.betsToTeam0[msg.sender] += msg.value;
+            _match.team0BetSum += msg.value;
+        }
+        else {
+            prevSum = _match.team1BetSum;
+            require((prevSum + msg.value) >= prevSum);
+            assert(_match.team1BetSum >= prevSum);
+            _match.betsToTeam1[msg.sender] += msg.value;
+            _match.team1BetSum += msg.value;
+        }
+        NewBet(team0, msg.sender, msg.value);
+
         
 
     }
+
+    function endMatch(bytes32 _matchid) external {
+
+    }
+
 
 
 }
