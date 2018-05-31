@@ -22,8 +22,9 @@ class Web3Service {
         ProofOfExistence['networks'][this.networkId].address
       )
 
-      contract.methods.proofFor('teste').call(null, (r) => {
-        console.log(r)
+      contract.methods.proofFor('teste').call((e, r) => {
+        if(e) console.error(e)
+        else console.log(`Proof for teste: ${r}`)
       })
 
     })
