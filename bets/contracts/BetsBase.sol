@@ -14,7 +14,7 @@ contract BetsBase {
     // of this structure 
     struct Match {
         //match unique ID
-        uint256 match_id;
+        bytes32 match_id;
 
         string team0Name;
         string team1Name;
@@ -24,10 +24,24 @@ contract BetsBase {
         // array of bet sum per address on each team
         mapping (address => uint) betsToTeam0;
         mapping (address => uint) betsToTeam1;
-
+        bool state;
         uint8 TAX;
     
     }
+
+    mapping (bytes32 => Match) Matches;
+
+    function CreateMatch(string _team0Name, string _team1Name) returns (bytes32){
+        bytes32 matchid = sha256(block.timestamp);
+        Matches[matchid].team0Name = _team0Name;
+        Matches[matchid].team1Name = _team1Name;
+        Matches[matchid].team0BetSum = 0;
+        Matches[matchid].team1BetSum = 0;
+        Matches[matchid].state = true;
+        Matches[matchid].TAX = 10;
+        return (matchid);
+    }
+
 
 
     function proofFor(string document) constant returns (bytes32) {

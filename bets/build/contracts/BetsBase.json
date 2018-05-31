@@ -53,6 +53,29 @@
       "type": "event"
     },
     {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_team0Name",
+          "type": "string"
+        },
+        {
+          "name": "_team1Name",
+          "type": "string"
+        }
+      ],
+      "name": "CreateMatch",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "constant": true,
       "inputs": [
         {
@@ -72,20 +95,20 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b506101a2806100206000396000f300608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063f6c1acdf14610046575b600080fd5b34801561005257600080fd5b506100ad600480360381019080803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192905050506100cb565b60405180826000191660001916815260200191505060405180910390f35b60006002826040518082805190602001908083835b60208310151561010557805182526020820191506020810190506020830392506100e0565b6001836020036101000a0380198251168184511680821785525050505050509050019150506020604051808303816000865af1158015610149573d6000803e3d6000fd5b5050506040513d602081101561015e57600080fd5b810190808051906020019092919050505090509190505600a165627a7a72305820734e0e516bd97df421abf69a9e1053992409b8d4939fb1a23b272017be58ac500029",
-  "deployedBytecode": "0x608060405260043610610041576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063f6c1acdf14610046575b600080fd5b34801561005257600080fd5b506100ad600480360381019080803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192905050506100cb565b60405180826000191660001916815260200191505060405180910390f35b60006002826040518082805190602001908083835b60208310151561010557805182526020820191506020810190506020830392506100e0565b6001836020036101000a0380198251168184511680821785525050505050509050019150506020604051808303816000865af1158015610149573d6000803e3d6000fd5b5050506040513d602081101561015e57600080fd5b810190808051906020019092919050505090509190505600a165627a7a72305820734e0e516bd97df421abf69a9e1053992409b8d4939fb1a23b272017be58ac500029",
-  "sourceMap": "64:806:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;64:806:0;;;;;;;",
-  "deployedSourceMap": "64:806:0:-;;;;;;;;;;;;;;;;;;;;;;;;763:102;;8:9:-1;5:2;;;30:1;27;20:12;5:2;763:102:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;816:7;842:16;849:8;842:16;;;;;;;;;;;;;36:153:-1;66:2;61:3;58:11;51:19;36:153;;;182:3;176:10;171:3;164:23;98:2;93:3;89:12;82:19;;123:2;118:3;114:12;107:19;;148:2;143:3;139:12;132:19;;36:153;;;274:1;267:3;263:2;259:12;254:3;250:22;246:30;315:4;311:9;305:3;299:10;295:26;356:4;350:3;344:10;340:21;389:7;380;377:20;372:3;365:33;3:399;;;842:16:0;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;842:16:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;842:16:0;;;;;;;;;;;;;;;;835:23;;763:102;;;:::o",
-  "source": "pragma solidity ^0.4.18;\n\n// import \"./BetsAccessControl.sol\";\n\ncontract BetsBase {\n    \n    event MatchCreation(uint256 match_id);\n\n    event BetMade(uint256 match_id, address indexed from, bool forTeam, uint amount);\n\n    event MatchEnd(uint256 match_id);\n\n    // The main match struct, every match in bitkup is represented by a copy\n    // of this structure \n    struct Match {\n        //match unique ID\n        uint256 match_id;\n\n        string team0Name;\n        string team1Name;\n        // array of bet sum on each team\n        uint team0BetSum;\n        uint team1BetSum;\n        // array of bet sum per address on each team\n        mapping (address => uint) betsToTeam0;\n        mapping (address => uint) betsToTeam1;\n\n        uint8 TAX;\n    \n    }\n\n\n    function proofFor(string document) constant returns (bytes32) {\n        return sha256(document);\n    }\n\n\n\n}\n\n\n",
+  "bytecode": "0x608060405234801561001057600080fd5b50610498806100206000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cbe5d3db14610051578063f6c1acdf1461011c575b600080fd5b34801561005d57600080fd5b506100fe600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192905050506101a1565b60405180826000191660001916815260200191505060405180910390f35b34801561012857600080fd5b50610183600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061031c565b60405180826000191660001916815260200191505060405180910390f35b600080600242604051808281526020019150506020604051808303816000865af11580156101d3573d6000803e3d6000fd5b5050506040513d60208110156101e857600080fd5b81019080805190602001909291905050509050836000808360001916600019168152602001908152602001600020600101908051906020019061022c9291906103c7565b50826000808360001916600019168152602001908152602001600020600201908051906020019061025e9291906103c7565b50600080600083600019166000191681526020019081526020016000206003018190555060008060008360001916600019168152602001908152602001600020600401819055506001600080836000191660001916815260200190815260200160002060070160006101000a81548160ff021916908315150217905550600a600080836000191660001916815260200190815260200160002060070160016101000a81548160ff021916908360ff1602179055508091505092915050565b60006002826040518082805190602001908083835b6020831015156103565780518252602082019150602081019050602083039250610331565b6001836020036101000a0380198251168184511680821785525050505050509050019150506020604051808303816000865af115801561039a573d6000803e3d6000fd5b5050506040513d60208110156103af57600080fd5b81019080805190602001909291905050509050919050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061040857805160ff1916838001178555610436565b82800160010185558215610436579182015b8281111561043557825182559160200191906001019061041a565b5b5090506104439190610447565b5090565b61046991905b8082111561046557600081600090555060010161044d565b5090565b905600a165627a7a72305820e8587b0b3be1ae57920859d17f733d38d480b09d4b316294a15b64419780e4ff0029",
+  "deployedBytecode": "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063cbe5d3db14610051578063f6c1acdf1461011c575b600080fd5b34801561005d57600080fd5b506100fe600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290803590602001908201803590602001908080601f01602080910402602001604051908101604052809392919081815260200183838082843782019150505050505091929192905050506101a1565b60405180826000191660001916815260200191505060405180910390f35b34801561012857600080fd5b50610183600480360381019080803590602001908201803590602001908080601f016020809104026020016040519081016040528093929190818152602001838380828437820191505050505050919291929050505061031c565b60405180826000191660001916815260200191505060405180910390f35b600080600242604051808281526020019150506020604051808303816000865af11580156101d3573d6000803e3d6000fd5b5050506040513d60208110156101e857600080fd5b81019080805190602001909291905050509050836000808360001916600019168152602001908152602001600020600101908051906020019061022c9291906103c7565b50826000808360001916600019168152602001908152602001600020600201908051906020019061025e9291906103c7565b50600080600083600019166000191681526020019081526020016000206003018190555060008060008360001916600019168152602001908152602001600020600401819055506001600080836000191660001916815260200190815260200160002060070160006101000a81548160ff021916908315150217905550600a600080836000191660001916815260200190815260200160002060070160016101000a81548160ff021916908360ff1602179055508091505092915050565b60006002826040518082805190602001908083835b6020831015156103565780518252602082019150602081019050602083039250610331565b6001836020036101000a0380198251168184511680821785525050505050509050019150506020604051808303816000865af115801561039a573d6000803e3d6000fd5b5050506040513d60208110156103af57600080fd5b81019080805190602001909291905050509050919050565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061040857805160ff1916838001178555610436565b82800160010185558215610436579182015b8281111561043557825182559160200191906001019061041a565b5b5090506104439190610447565b5090565b61046991905b8082111561046557600081600090555060010161044d565b5090565b905600a165627a7a72305820e8587b0b3be1ae57920859d17f733d38d480b09d4b316294a15b64419780e4ff0029",
+  "sourceMap": "64:1289:0:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;64:1289:0;;;;;;;",
+  "deployedSourceMap": "64:1289:0:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;822:416;;8:9:-1;5:2;;;30:1;27;20:12;5:2;822:416:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1246:102;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1246:102:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;822:416;890:7;908:15;926:23;933:15;926:23;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;926:23:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;926:23:0;;;;;;;;;;;;;;;;908:41;;988:10;959:7;:16;967:7;959:16;;;;;;;;;;;;;;;;;:26;;:39;;;;;;;;;;;;:::i;:::-;;1037:10;1008:7;:16;1016:7;1008:16;;;;;;;;;;;;;;;;;:26;;:39;;;;;;;;;;;;:::i;:::-;;1088:1;1057:7;:16;1065:7;1057:16;;;;;;;;;;;;;;;;;:28;;:32;;;;1130:1;1099:7;:16;1107:7;1099:16;;;;;;;;;;;;;;;;;:28;;:32;;;;1166:4;1141:7;:16;1149:7;1141:16;;;;;;;;;;;;;;;;;:22;;;:29;;;;;;;;;;;;;;;;;;1203:2;1180:7;:16;1188:7;1180:16;;;;;;;;;;;;;;;;;:20;;;:25;;;;;;;;;;;;;;;;;;1223:7;1215:16;;822:416;;;;;:::o;1246:102::-;1299:7;1325:16;1332:8;1325:16;;;;;;;;;;;;;36:153:-1;66:2;61:3;58:11;51:19;36:153;;;182:3;176:10;171:3;164:23;98:2;93:3;89:12;82:19;;123:2;118:3;114:12;107:19;;148:2;143:3;139:12;132:19;;36:153;;;274:1;267:3;263:2;259:12;254:3;250:22;246:30;315:4;311:9;305:3;299:10;295:26;356:4;350:3;344:10;340:21;389:7;380;377:20;372:3;365:33;3:399;;;1325:16:0;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;1325:16:0;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1325:16:0;;;;;;;;;;;;;;;;1318:23;;1246:102;;;:::o;64:1289::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\n\n// import \"./BetsAccessControl.sol\";\n\ncontract BetsBase {\n    \n    event MatchCreation(uint256 match_id);\n\n    event BetMade(uint256 match_id, address indexed from, bool forTeam, uint amount);\n\n    event MatchEnd(uint256 match_id);\n\n    // The main match struct, every match in bitkup is represented by a copy\n    // of this structure \n    struct Match {\n        //match unique ID\n        bytes32 match_id;\n\n        string team0Name;\n        string team1Name;\n        // array of bet sum on each team\n        uint team0BetSum;\n        uint team1BetSum;\n        // array of bet sum per address on each team\n        mapping (address => uint) betsToTeam0;\n        mapping (address => uint) betsToTeam1;\n        bool state;\n        uint8 TAX;\n    \n    }\n\n    mapping (bytes32 => Match) Matches;\n\n    function CreateMatch(string _team0Name, string _team1Name) returns (bytes32){\n        bytes32 matchid = sha256(block.timestamp);\n        Matches[matchid].team0Name = _team0Name;\n        Matches[matchid].team1Name = _team1Name;\n        Matches[matchid].team0BetSum = 0;\n        Matches[matchid].team1BetSum = 0;\n        Matches[matchid].state = true;\n        Matches[matchid].TAX = 10;\n        return (matchid);\n    }\n\n\n\n    function proofFor(string document) constant returns (bytes32) {\n        return sha256(document);\n    }\n\n\n\n}\n\n\n",
   "sourcePath": "/Users/ferraz/trash/bitkup/bets/contracts/BetsBase.sol",
   "ast": {
     "absolutePath": "/Users/ferraz/trash/bitkup/bets/contracts/BetsBase.sol",
     "exportedSymbols": {
       "BetsBase": [
-        53
+        121
       ]
     },
-    "id": 54,
+    "id": 122,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -105,9 +128,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 53,
+        "id": 121,
         "linearizedBaseContracts": [
-          53
+          121
         ],
         "name": "BetsBase",
         "nodeType": "ContractDefinition",
@@ -321,29 +344,29 @@
           },
           {
             "canonicalName": "BetsBase.Match",
-            "id": 40,
+            "id": 42,
             "members": [
               {
                 "constant": false,
                 "id": 21,
                 "name": "match_id",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "415:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_uint256",
-                  "typeString": "uint256"
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
                 },
                 "typeName": {
                   "id": 20,
-                  "name": "uint256",
+                  "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "415:7:0",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
                   }
                 },
                 "value": null,
@@ -354,7 +377,7 @@
                 "id": 23,
                 "name": "team0Name",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "442:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -380,7 +403,7 @@
                 "id": 25,
                 "name": "team1Name",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "468:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -406,7 +429,7 @@
                 "id": 27,
                 "name": "team0BetSum",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "535:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -432,7 +455,7 @@
                 "id": 29,
                 "name": "team1BetSum",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "561:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -458,7 +481,7 @@
                 "id": 33,
                 "name": "betsToTeam0",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "640:37:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -503,7 +526,7 @@
                 "id": 37,
                 "name": "betsToTeam1",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "687:37:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -546,10 +569,36 @@
               {
                 "constant": false,
                 "id": 39,
+                "name": "state",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "734:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 38,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "734:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 41,
                 "name": "TAX",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
-                "src": "735:9:0",
+                "scope": 42,
+                "src": "754:9:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -557,10 +606,10 @@
                   "typeString": "uint8"
                 },
                 "typeName": {
-                  "id": 38,
+                  "id": 40,
                   "name": "uint8",
                   "nodeType": "ElementaryTypeName",
-                  "src": "735:5:0",
+                  "src": "754:5:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint8",
                     "typeString": "uint8"
@@ -572,15 +621,868 @@
             ],
             "name": "Match",
             "nodeType": "StructDefinition",
-            "scope": 53,
-            "src": "366:390:0",
+            "scope": 121,
+            "src": "366:409:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 46,
+            "name": "Matches",
+            "nodeType": "VariableDeclaration",
+            "scope": 121,
+            "src": "781:34:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+              "typeString": "mapping(bytes32 => struct BetsBase.Match)"
+            },
+            "typeName": {
+              "id": 45,
+              "keyType": {
+                "id": 43,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "790:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "781:26:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                "typeString": "mapping(bytes32 => struct BetsBase.Match)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 44,
+                "name": "Match",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 42,
+                "src": "801:5:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Match_$42_storage_ptr",
+                  "typeString": "struct BetsBase.Match"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 107,
+              "nodeType": "Block",
+              "src": "898:340:0",
+              "statements": [
+                {
+                  "assignments": [
+                    56
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 56,
+                      "name": "matchid",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 108,
+                      "src": "908:15:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 55,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "908:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 58,
+                          "name": "block",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 126,
+                          "src": "933:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_block",
+                            "typeString": "block"
+                          }
+                        },
+                        "id": 59,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "timestamp",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "933:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 57,
+                      "name": "sha256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 145,
+                      "src": "926:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_sha256_pure$__$returns$_t_bytes32_$",
+                        "typeString": "function () pure returns (bytes32)"
+                      }
+                    },
+                    "id": 60,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "926:23:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "908:41:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 67,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 62,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "959:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 64,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 63,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "967:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "959:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 65,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team0Name",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 23,
+                      "src": "959:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 66,
+                      "name": "_team0Name",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48,
+                      "src": "988:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "959:39:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 68,
+                  "nodeType": "ExpressionStatement",
+                  "src": "959:39:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 74,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 69,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1008:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 71,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 70,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1016:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1008:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 72,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team1Name",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 25,
+                      "src": "1008:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 73,
+                      "name": "_team1Name",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 50,
+                      "src": "1037:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "1008:39:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 75,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1008:39:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 81,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 76,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1057:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 78,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 77,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1065:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1057:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 79,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team0BetSum",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 27,
+                      "src": "1057:28:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 80,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1088:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "1057:32:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 82,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1057:32:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 88,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 83,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1099:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 85,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 84,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1107:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1099:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 86,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team1BetSum",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 29,
+                      "src": "1099:28:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 87,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1130:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "1099:32:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 89,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1099:32:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 95,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 90,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1141:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 92,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 91,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1149:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1141:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 93,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "state",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "1141:22:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 94,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1166:4:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1141:29:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 96,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1141:29:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 102,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 97,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1180:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 99,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 98,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1188:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1180:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 100,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "TAX",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 41,
+                      "src": "1180:20:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint8",
+                        "typeString": "uint8"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "3130",
+                      "id": 101,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1203:2:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_10_by_1",
+                        "typeString": "int_const 10"
+                      },
+                      "value": "10"
+                    },
+                    "src": "1180:25:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "id": 103,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1180:25:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 104,
+                        "name": "matchid",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 56,
+                        "src": "1223:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      }
+                    ],
+                    "id": 105,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "1222:9:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "functionReturnParameters": 54,
+                  "id": 106,
+                  "nodeType": "Return",
+                  "src": "1215:16:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 108,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "CreateMatch",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 51,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 48,
+                  "name": "_team0Name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "843:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 47,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "843:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 50,
+                  "name": "_team1Name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "862:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 49,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "862:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "842:38:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 54,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 53,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "890:7:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 52,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "890:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "889:9:0"
+            },
+            "scope": 121,
+            "src": "822:416:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 51,
+              "id": 119,
               "nodeType": "Block",
-              "src": "825:40:0",
+              "src": "1308:40:0",
               "statements": [
                 {
                   "expression": {
@@ -588,12 +1490,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 48,
+                        "id": 116,
                         "name": "document",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 42,
-                        "src": "849:8:0",
+                        "referencedDeclaration": 110,
+                        "src": "1332:8:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -607,18 +1509,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 47,
+                      "id": 115,
                       "name": "sha256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 86,
-                      "src": "842:6:0",
+                      "referencedDeclaration": 145,
+                      "src": "1325:6:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_sha256_pure$__$returns$_t_bytes32_$",
                         "typeString": "function () pure returns (bytes32)"
                       }
                     },
-                    "id": 49,
+                    "id": 117,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -626,21 +1528,21 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "842:16:0",
+                    "src": "1325:16:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "functionReturnParameters": 46,
-                  "id": 50,
+                  "functionReturnParameters": 114,
+                  "id": 118,
                   "nodeType": "Return",
-                  "src": "835:23:0"
+                  "src": "1318:23:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 52,
+            "id": 120,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -648,16 +1550,16 @@
             "name": "proofFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43,
+              "id": 111,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42,
+                  "id": 110,
                   "name": "document",
                   "nodeType": "VariableDeclaration",
-                  "scope": 52,
-                  "src": "781:15:0",
+                  "scope": 120,
+                  "src": "1264:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -665,10 +1567,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 41,
+                    "id": 109,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "781:6:0",
+                    "src": "1264:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -678,20 +1580,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "780:17:0"
+              "src": "1263:17:0"
             },
             "payable": false,
             "returnParameters": {
-              "id": 46,
+              "id": 114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45,
+                  "id": 113,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 52,
-                  "src": "816:7:0",
+                  "scope": 120,
+                  "src": "1299:7:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -699,10 +1601,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 44,
+                    "id": 112,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "816:7:0",
+                    "src": "1299:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -712,29 +1614,29 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "815:9:0"
+              "src": "1298:9:0"
             },
-            "scope": 53,
-            "src": "763:102:0",
+            "scope": 121,
+            "src": "1246:102:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 54,
-        "src": "64:806:0"
+        "scope": 122,
+        "src": "64:1289:0"
       }
     ],
-    "src": "0:873:0"
+    "src": "0:1356:0"
   },
   "legacyAST": {
     "absolutePath": "/Users/ferraz/trash/bitkup/bets/contracts/BetsBase.sol",
     "exportedSymbols": {
       "BetsBase": [
-        53
+        121
       ]
     },
-    "id": 54,
+    "id": 122,
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -754,9 +1656,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 53,
+        "id": 121,
         "linearizedBaseContracts": [
-          53
+          121
         ],
         "name": "BetsBase",
         "nodeType": "ContractDefinition",
@@ -970,29 +1872,29 @@
           },
           {
             "canonicalName": "BetsBase.Match",
-            "id": 40,
+            "id": 42,
             "members": [
               {
                 "constant": false,
                 "id": 21,
                 "name": "match_id",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "415:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_uint256",
-                  "typeString": "uint256"
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
                 },
                 "typeName": {
                   "id": 20,
-                  "name": "uint256",
+                  "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "415:7:0",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
                   }
                 },
                 "value": null,
@@ -1003,7 +1905,7 @@
                 "id": 23,
                 "name": "team0Name",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "442:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1029,7 +1931,7 @@
                 "id": 25,
                 "name": "team1Name",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "468:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1055,7 +1957,7 @@
                 "id": 27,
                 "name": "team0BetSum",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "535:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1081,7 +1983,7 @@
                 "id": 29,
                 "name": "team1BetSum",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "561:16:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1107,7 +2009,7 @@
                 "id": 33,
                 "name": "betsToTeam0",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "640:37:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1152,7 +2054,7 @@
                 "id": 37,
                 "name": "betsToTeam1",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
+                "scope": 42,
                 "src": "687:37:0",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -1195,10 +2097,36 @@
               {
                 "constant": false,
                 "id": 39,
+                "name": "state",
+                "nodeType": "VariableDeclaration",
+                "scope": 42,
+                "src": "734:10:0",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 38,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "734:4:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 41,
                 "name": "TAX",
                 "nodeType": "VariableDeclaration",
-                "scope": 40,
-                "src": "735:9:0",
+                "scope": 42,
+                "src": "754:9:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1206,10 +2134,10 @@
                   "typeString": "uint8"
                 },
                 "typeName": {
-                  "id": 38,
+                  "id": 40,
                   "name": "uint8",
                   "nodeType": "ElementaryTypeName",
-                  "src": "735:5:0",
+                  "src": "754:5:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint8",
                     "typeString": "uint8"
@@ -1221,15 +2149,868 @@
             ],
             "name": "Match",
             "nodeType": "StructDefinition",
-            "scope": 53,
-            "src": "366:390:0",
+            "scope": 121,
+            "src": "366:409:0",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 46,
+            "name": "Matches",
+            "nodeType": "VariableDeclaration",
+            "scope": 121,
+            "src": "781:34:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+              "typeString": "mapping(bytes32 => struct BetsBase.Match)"
+            },
+            "typeName": {
+              "id": 45,
+              "keyType": {
+                "id": 43,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "790:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "781:26:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                "typeString": "mapping(bytes32 => struct BetsBase.Match)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 44,
+                "name": "Match",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 42,
+                "src": "801:5:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Match_$42_storage_ptr",
+                  "typeString": "struct BetsBase.Match"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 107,
+              "nodeType": "Block",
+              "src": "898:340:0",
+              "statements": [
+                {
+                  "assignments": [
+                    56
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 56,
+                      "name": "matchid",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 108,
+                      "src": "908:15:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes32",
+                        "typeString": "bytes32"
+                      },
+                      "typeName": {
+                        "id": 55,
+                        "name": "bytes32",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "908:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 61,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 58,
+                          "name": "block",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 126,
+                          "src": "933:5:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_block",
+                            "typeString": "block"
+                          }
+                        },
+                        "id": 59,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "timestamp",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "933:15:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 57,
+                      "name": "sha256",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 145,
+                      "src": "926:6:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_sha256_pure$__$returns$_t_bytes32_$",
+                        "typeString": "function () pure returns (bytes32)"
+                      }
+                    },
+                    "id": 60,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "926:23:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "908:41:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 67,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 62,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "959:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 64,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 63,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "967:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "959:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 65,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team0Name",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 23,
+                      "src": "959:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 66,
+                      "name": "_team0Name",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48,
+                      "src": "988:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "959:39:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 68,
+                  "nodeType": "ExpressionStatement",
+                  "src": "959:39:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 74,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 69,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1008:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 71,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 70,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1016:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1008:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 72,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team1Name",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 25,
+                      "src": "1008:26:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 73,
+                      "name": "_team1Name",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 50,
+                      "src": "1037:10:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "1008:39:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 75,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1008:39:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 81,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 76,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1057:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 78,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 77,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1065:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1057:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 79,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team0BetSum",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 27,
+                      "src": "1057:28:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 80,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1088:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "1057:32:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 82,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1057:32:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 88,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 83,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1099:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 85,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 84,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1107:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1099:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 86,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "team1BetSum",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 29,
+                      "src": "1099:28:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "30",
+                      "id": 87,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1130:1:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_0_by_1",
+                        "typeString": "int_const 0"
+                      },
+                      "value": "0"
+                    },
+                    "src": "1099:32:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 89,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1099:32:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 95,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 90,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1141:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 92,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 91,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1149:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1141:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 93,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "state",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 39,
+                      "src": "1141:22:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "74727565",
+                      "id": 94,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1166:4:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "1141:29:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 96,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1141:29:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 102,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 97,
+                          "name": "Matches",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 46,
+                          "src": "1180:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Match_$42_storage_$",
+                            "typeString": "mapping(bytes32 => struct BetsBase.Match storage ref)"
+                          }
+                        },
+                        "id": 99,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "id": 98,
+                          "name": "matchid",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 56,
+                          "src": "1188:7:0",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "1180:16:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Match_$42_storage",
+                          "typeString": "struct BetsBase.Match storage ref"
+                        }
+                      },
+                      "id": 100,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "TAX",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 41,
+                      "src": "1180:20:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint8",
+                        "typeString": "uint8"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "hexValue": "3130",
+                      "id": 101,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "number",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "1203:2:0",
+                      "subdenomination": null,
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_rational_10_by_1",
+                        "typeString": "int_const 10"
+                      },
+                      "value": "10"
+                    },
+                    "src": "1180:25:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint8",
+                      "typeString": "uint8"
+                    }
+                  },
+                  "id": 103,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1180:25:0"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "components": [
+                      {
+                        "argumentTypes": null,
+                        "id": 104,
+                        "name": "matchid",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 56,
+                        "src": "1223:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes32",
+                          "typeString": "bytes32"
+                        }
+                      }
+                    ],
+                    "id": 105,
+                    "isConstant": false,
+                    "isInlineArray": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "TupleExpression",
+                    "src": "1222:9:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "functionReturnParameters": 54,
+                  "id": 106,
+                  "nodeType": "Return",
+                  "src": "1215:16:0"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 108,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "CreateMatch",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 51,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 48,
+                  "name": "_team0Name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "843:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 47,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "843:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 50,
+                  "name": "_team1Name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "862:17:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 49,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "862:6:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "842:38:0"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 54,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 53,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 108,
+                  "src": "890:7:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  },
+                  "typeName": {
+                    "id": 52,
+                    "name": "bytes32",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "890:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes32",
+                      "typeString": "bytes32"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "889:9:0"
+            },
+            "scope": 121,
+            "src": "822:416:0",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
             "visibility": "public"
           },
           {
             "body": {
-              "id": 51,
+              "id": 119,
               "nodeType": "Block",
-              "src": "825:40:0",
+              "src": "1308:40:0",
               "statements": [
                 {
                   "expression": {
@@ -1237,12 +3018,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 48,
+                        "id": 116,
                         "name": "document",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 42,
-                        "src": "849:8:0",
+                        "referencedDeclaration": 110,
+                        "src": "1332:8:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_string_memory_ptr",
                           "typeString": "string memory"
@@ -1256,18 +3037,18 @@
                           "typeString": "string memory"
                         }
                       ],
-                      "id": 47,
+                      "id": 115,
                       "name": "sha256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 86,
-                      "src": "842:6:0",
+                      "referencedDeclaration": 145,
+                      "src": "1325:6:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_sha256_pure$__$returns$_t_bytes32_$",
                         "typeString": "function () pure returns (bytes32)"
                       }
                     },
-                    "id": 49,
+                    "id": 117,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1275,21 +3056,21 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "842:16:0",
+                    "src": "1325:16:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
-                  "functionReturnParameters": 46,
-                  "id": 50,
+                  "functionReturnParameters": 114,
+                  "id": 118,
                   "nodeType": "Return",
-                  "src": "835:23:0"
+                  "src": "1318:23:0"
                 }
               ]
             },
             "documentation": null,
-            "id": 52,
+            "id": 120,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1297,16 +3078,16 @@
             "name": "proofFor",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 43,
+              "id": 111,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42,
+                  "id": 110,
                   "name": "document",
                   "nodeType": "VariableDeclaration",
-                  "scope": 52,
-                  "src": "781:15:0",
+                  "scope": 120,
+                  "src": "1264:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1314,10 +3095,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 41,
+                    "id": 109,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "781:6:0",
+                    "src": "1264:6:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -1327,20 +3108,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "780:17:0"
+              "src": "1263:17:0"
             },
             "payable": false,
             "returnParameters": {
-              "id": 46,
+              "id": 114,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 45,
+                  "id": 113,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 52,
-                  "src": "816:7:0",
+                  "scope": 120,
+                  "src": "1299:7:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1348,10 +3129,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 44,
+                    "id": 112,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "816:7:0",
+                    "src": "1299:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -1361,20 +3142,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "815:9:0"
+              "src": "1298:9:0"
             },
-            "scope": 53,
-            "src": "763:102:0",
+            "scope": 121,
+            "src": "1246:102:0",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 54,
-        "src": "64:806:0"
+        "scope": 122,
+        "src": "64:1289:0"
       }
     ],
-    "src": "0:873:0"
+    "src": "0:1356:0"
   },
   "compiler": {
     "name": "solc",
@@ -1386,8 +3167,14 @@
       "links": {},
       "address": "0x4e038b924ccd8f8276d5685dec9f676ea415216d",
       "transactionHash": "0x72c09d1b6789dee2c518af57dcb3d4aa8911d5f71e156ed5774826259d1b1ddf"
+    },
+    "1527790477044": {
+      "events": {},
+      "links": {},
+      "address": "0x09dc0c1c3e3c13b1fbedfb0b271f3238ee4ac263",
+      "transactionHash": "0x90767677ad748349acd608ed60a9a0e173a91b4f77d06e6331283efca36a1b74"
     }
   },
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-05-31T18:00:35.836Z"
+  "updatedAt": "2018-05-31T18:38:14.015Z"
 }

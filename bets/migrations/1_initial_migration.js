@@ -1,4 +1,4 @@
-var Migrations = artifacts.require("./ProofOfExistence1.sol");
+var Migrations = artifacts.require("./BetsBase.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(Migrations);
