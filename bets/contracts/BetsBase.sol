@@ -8,8 +8,6 @@ contract BetsBase {
     
     event MatchCreation(uint256 match_id);
 
-    event BetMade(uint256 match_id, address indexed from, bool forTeam, uint amount);
-
     event MatchEnd(uint256 match_id);
 
     // The main match struct, every match in bitkup is represented by a copy
@@ -47,6 +45,7 @@ contract BetsBase {
         });
         uint256 newMatchIndex = matches.push(_match) - 1;
         Matches_Index[_match.match_id] = newMatchIndex;
+        MatchCreation(_match.match_id)
     }
 
 
