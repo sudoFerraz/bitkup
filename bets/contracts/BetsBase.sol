@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-import "./BetsAccessControl.sol";
+// import "./BetsAccessControl.sol";
 
-contract BetsBase is BetsAccessControl {
+contract BetsBase {
     
     event MatchCreation(uint256 match_id);
 
@@ -29,13 +29,9 @@ contract BetsBase is BetsAccessControl {
     
     }
 
-    function CreateMatch(string _team0Name, string _team1Name) onlyCEO {
-    
-    
-    }
-    
-    function test() public view returns (string) {
-        return("teste");
+
+    function proofFor(string document) constant returns (bytes32) {
+        return sha256(document);
     }
 
 
