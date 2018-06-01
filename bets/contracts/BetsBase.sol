@@ -45,7 +45,7 @@ contract BetsBase {
         });
         uint256 newMatchIndex = matches.push(_match) - 1;
         Matches_Index[_match.match_id] = newMatchIndex;
-        MatchCreation(_match.match_id)
+       // MatchCreation(_match.match_id);
     }
 
 
@@ -90,7 +90,7 @@ contract BetsBase {
             _match.betsToTeam1[msg.sender] += msg.value;
             _match.team1BetSum += msg.value;
         }
-        NewBet(team0, msg.sender, msg.value);
+//        NewBet(team0, msg.sender, msg.value);
 
         
 
