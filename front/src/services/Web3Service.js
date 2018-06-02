@@ -1,37 +1,17 @@
 import Web3 from 'web3'
-import ProofOfExistence from 'build/contracts/ProofOfExistence1.json'
+// import BetsBase from 'build/contracts/BetsBase.json'
 
 class Web3Service {
+
   static instance
 
   constructor() {
-    if(Web3Service.instance) return Web3Service.instance
-
-    Web3Service.instance = this
-
-    this.getWeb3().then(results => {
-      this.web3 = results.web3
-      this.provider = results.provider;
-      this.selectedAccount = results.selectedAccount;
-      this.networkId = results.networkId;
-      this.networkName = results.networkName;
-      console.log(`${results.networkName} (${results.networkId}) - ${results.selectedAccount}`)
-
-      const contract = new this.web3.eth.Contract(
-        ProofOfExistence.abi,
-        ProofOfExistence['networks'][this.networkId].address
-      )
-
-      contract.methods.proofFor('teste').call((e, r) => {
-        if(e) console.error(e)
-        else console.log(`Proof for teste: ${r}`)
-      })
-
-    })
+    if(!Web3Service.instance) Web3Service.instance = this
+    return Web3Service.instance
   }
 
-  getWeb3() {
-    return new Promise((res, rej) => {
+  load() {
+    return new Promise((resolve, reject) => {
       
       let web3js
       let results = {}
@@ -52,7 +32,7 @@ class Web3Service {
             web3: web3js,
             provider: 'Infura'
           }
-          console.log('No web3 instance injected, using infura\'s provider');
+          console.warn('No web3 instance injected, using infura\'s provider');
         }
         
         const networks = {
@@ -62,12 +42,22 @@ class Web3Service {
           '42': 'Kovan'
         }
 
-        const networkId = await web3js.eth.net.getId().catch(err => rej(err))
-        const networkName = (networks[networkId]) ? networks[networkId] : 'Private'
+        const network = {}
+        network.id = await web3js.eth.net.getId().catch(err => reject(err))
+        network.name = (networks[network.id]) ? networks[network.id] : 'Private'
+        
         const accounts = await web3js.eth.getAccounts()
         const selectedAccount = accounts[0]
 
-        res({ ...results, selectedAccount, networkId, networkName })
+        if(!selectedAccount) reject(new Error('No account selected.'))
+        else {
+          this.web3 = results.web3
+          this.provider = results.provider
+          this.network = network
+          this.account = selectedAccount
+          console.log(this.account)
+          resolve(this)
+        }
       })
     })
   }
@@ -77,4 +67,4 @@ class Web3Service {
   }
 }
 
-export default new Web3Service()
+export default Web3Service
