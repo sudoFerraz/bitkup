@@ -1,15 +1,18 @@
 pragma solidity ^0.4.24;
 
 
-// import "./BetsBase.sol";
+import "./BetsBase.sol";
 
-contract BetsCore{
+contract BetsCore is BetsBase{
 
     //Set in case the core contract is broken and an upgrade is required
     address public newContractAddress;
 
     // Create the main Bet smart contract instance
     function BetCore() public {
+        paused = true;
+        ceoAddress = msg.sender;
+        arbiterAddress = msg.sender;
         // Starts paused
    //     paused = true;
         

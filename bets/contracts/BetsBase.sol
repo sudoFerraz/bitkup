@@ -1,8 +1,8 @@
 pragma solidity ^0.4.18;
 
-// import "./BetsAccessControl.sol";
+import "./BetsAccessControl.sol";
 
-contract BetsBase {
+contract BetsBase is BetsAccessControl{
     
     event NewBet(bool team0, address indexed from, uint amount);
     
@@ -122,7 +122,7 @@ contract BetsBase {
         MatchResolved(_matchid, _won);
     }
     
-
+//TODO make TAX
     function withdrawRewards(bytes32 _matchid) external {
         uint256 _match_index = getIndexById(_matchid);
         Match storage _match = matches[_match_index];
@@ -135,9 +135,9 @@ contract BetsBase {
             msg.sender.transfer(x);
         }
         if (_match.won == 1) {
-            require(_match.betstoTeam1[msg.sender] != 0);
+            require(_match.betsToTeam1[msg.sender] != 0);
             x = _match.betsToTeam1[msg.sender] * _match.team1BetSum;
-            x = x / _match.team0BetSum;
+            x = x / _match.team1BetSum;
             _match.betsToTeam0[msg.sender] = 0;
             msg.sender.transfer(x);
         }

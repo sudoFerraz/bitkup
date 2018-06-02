@@ -20,7 +20,7 @@ contract BetsAccessControl {
     }
 
     function setCEO(address _newCEO) public onlyCEO {
-        require(_newCEO != address(0));
+ //       require(_newCEO != address(0));
         ceoAddress = _newCEO;
     }
 
