@@ -16,35 +16,53 @@ import appStyle from "assets/jss/material-dashboard-react/appStyle.jsx";
 import image from "assets/img/sidebar-2.jpg";
 import logo from "assets/img/reactlogo.png";
 
-const switchRoutes = (
+const switchRoutes = (web3Loaded) => (
   <Switch>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
-      return <Route path={prop.path} component={prop.component} key={key} />;
+      return <Route path={prop.path} component={prop.component} key={key} web3Loaded={web3Loaded}/>;
     })}
   </Switch>
 );
 
 class App extends React.Component {
+
   state = {
-    mobileOpen: false
+    mobileOpen: false,
+    web3Loaded: false
   };
+
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
+
   getRoute() {
     return this.props.location.pathname !== "/maps";
   }
-  componentDidMount() {
+
+  async componentDidMount() {
     if(navigator.platform.indexOf('Win') > -1){
       // eslint-disable-next-line
       const ps = new PerfectScrollbar(this.refs.mainPanel);
     }
+
+    try {
+      await (new Web3Service()).load()
+      this.setState({ web3Loaded: true })
+    } catch (e) {
+      this.setState({ web3Loaded: false })
+    }
   }
+
   componentDidUpdate() {
     this.refs.mainPanel.scrollTop = 0;
   }
+
+  isWeb3Loaded() {
+    return this.state.web3Loaded === true
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -63,17 +81,21 @@ class App extends React.Component {
           <Header
             routes={dashboardRoutes}
             handleDrawerToggle={this.handleDrawerToggle}
-            web3={Web3Service}
+            additionalMessage={this.isWeb3Loaded() ? '' : 'We faced issues to load Web3 in your browser, please install an provider and select an account'}
+            color={this.isWeb3Loaded() ? null : 'danger'}
             {...rest}
           />
           {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
-          {this.getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>{switchRoutes}</div>
-            </div>
-          ) : (
-            <div className={classes.map}>{switchRoutes}</div>
-          )}
+            { (this.isWeb3Loaded()) ?
+              (this.getRoute()) ? (
+                <div className={classes.content}>
+                  <div className={classes.container}>{switchRoutes(this.isWeb3Loaded())}</div>
+                </div>
+              ) : (
+                <div className={classes.map}>{switchRoutes(this.isWeb3Loaded())}</div>
+              )
+              : ``
+            }
           {this.getRoute() ? <Footer /> : null}
         </div>
       </div>

@@ -10,7 +10,8 @@ import cx from "classnames";
 import headerStyle from "assets/jss/material-dashboard-react/headerStyle.jsx";
 
 function Header({ ...props }) {
-  function makeBrand() {
+  
+  function getRouteName() {
     var name;
     props.routes.map((prop, key) => {
       if (prop.path === props.location.pathname) {
@@ -20,15 +21,22 @@ function Header({ ...props }) {
     });
     return name;
   }
+
+  function makeTitle() {
+    const name = getRouteName()
+    return (props.additionalMessage) ? `${name} - ${props.additionalMessage}` : name
+  }
+
   const { classes, color } = props;
   const appBarClasses = cx({
     [" " + classes[color]]: color
   });
+
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
         <div className={classes.flex}>
-          {makeBrand()}
+          {makeTitle()}
         </div>
       </Toolbar>
     </AppBar>
@@ -37,6 +45,7 @@ function Header({ ...props }) {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
+  additionalMessage: PropTypes.string,
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"])
 };
 
