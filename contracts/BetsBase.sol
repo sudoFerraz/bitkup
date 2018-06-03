@@ -55,11 +55,8 @@ contract BetsBase is BetsAccessControl{
     }
 
 
-    function proofFor(string document) constant returns (bytes32) {
-        return sha256(document);
-    }
 
-    function getMatch(uint _index) constant returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum, bool _state, uint _won) {
+    function getMatch(uint _index) public view returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum, bool _state, uint _won) {
         Match storage _match = matches[_index];
         return (_match.team1Name, _match.team0Name, _match.match_id, _match.team0BetSum, _match.team1BetSum, _match.state, _match.won);
     
@@ -70,7 +67,7 @@ contract BetsBase is BetsAccessControl{
 
     }
 
-    function getIndexById(bytes32 _matchid) constant internal returns (uint256) {
+    function getIndexById(bytes32 _matchid) view internal returns (uint256) {
         uint256 Match_Index = Matches_Index[_matchid];
         return (Match_Index);
 
@@ -111,7 +108,7 @@ contract BetsBase is BetsAccessControl{
         return (balance0, balance1);
     }
 
-    function getsMultiplier(bytes32 _match_id) public constant returns(uint256, uint256){
+    function getsMultiplier(bytes32 _match_id) public view returns(uint256, uint256){
 
     }
 
