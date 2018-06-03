@@ -9,7 +9,7 @@ contract BetsCore is BetsBase{
     address public newContractAddress;
 
     // Create the main Bet smart contract instance
-    function BetsCore() public {
+    constructor() public {
         paused = true;
         ceoAddress = msg.sender;
         arbiterAddress = msg.sender;

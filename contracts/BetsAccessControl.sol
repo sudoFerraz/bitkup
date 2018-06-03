@@ -30,7 +30,7 @@ contract BetsAccessControl {
     }
 
     function withdrawBalance() external onlyCEO {
-        ceoAddress.transfer(this.balance);
+        ceoAddress.transfer(address(this).balance);
     }
 
     modifier whenNotPaused() {
