@@ -1,0 +1,55 @@
+header#header.app-header.navbar(role='menu')
+	.navbar-header.bg-dark
+		button.pull-right.visible-xs(ui-toggle-class='off-screen', target='.app-aside', ui-scroll='app')
+			i.glyphicon.glyphicon-align-justify
+
+		a.navbar-brand.text-lt(ui-sref="app.dashboard")
+			i.fa.fa-btc
+			img.hide(src='img/logo.png')
+			span.hidden-folded.m-l-xs Bitkup
+
+	.collapse.pos-rlt.navbar-collapse.box-shadow.bg-white-only
+
+		.nav.navbar-nav.hidden-xs
+			a.btn.no-shadow.navbar-btn(href='#' ui-toggle-class='app-aside-folded' target='.app')
+				i.fa.fa-dedent.fa-fw.text
+				i.fa.fa-indent.fa-fw.text-active
+			a.btn.no-shadow.navbar-btn(href='#' ui-toggle-class='show' target='#aside-user')
+				i.icon-user.fa-fw
+		ul.nav.navbar-nav.navbar-right
+
+			li.dropdown
+				a.dropdown-toggle.clear(data-toggle='dropdown' style="cursor: pointer;")
+					span.thumb-sm.avatar.pull-right.m-t-n-sm.m-b-n-sm.m-l-sm
+						img(src='https://randomuser.me/api/portraits/men/11.jpg', alt='...')
+						i.on.md.b-white.bottom
+					span.hidden-sm.hidden-md Bitkup
+					b.caret
+
+				ul.dropdown-menu.animated.fadeInRight.w
+					li
+						a(ng-click="logout()") Sair
+
+aside#aside.app-aside.hidden-xs.bg-dark
+	.aside-wrap
+		.navi-wrap
+			nav.navi.clearfix(ui-nav='')
+				ul.nav
+					a(ui-sref="app.dashboard" ui-sref-active="active")
+						i.glyphicon.glyphicon-stats
+						span Início
+					a(ui-sref="app.eventtypes" ui-sref-active="active" ng-if="hasPermission('EVENTS_MANAGEMENT')")
+						i.glyphicon.glyphicon-check
+						span Tipos de eventos
+					a(ui-sref="app.categories" ui-sref-active="active" ng-if="hasPermission('CATEGORIES_MANAGEMENT')")
+						i.glyphicon.glyphicon-folder-open
+						span Categorias
+					a(ui-sref="app.users" ui-sref-active="active" ng-if="hasPermission('ADMIN_USERS_MANAGEMENT')")
+						i.glyphicon.glyphicon-user
+						span Usuários
+
+div#content.app-content(role='main')
+	.app-content-body
+		.hbox.hbox-auto-xs.hbox-auto-sm
+			.col
+				ui-view
