@@ -46,7 +46,7 @@ contract BetsBase is BetsAccessControl{
             team0BetSum: 0,
             team1BetSum: 0,
             state: true,
-            TAX: 10,
+            TAX: 0.20,
             won: 2
         });
         uint256 newMatchIndex = matches.push(_match) - 1;
@@ -127,18 +127,21 @@ contract BetsBase is BetsAccessControl{
         uint256 _match_index = getIndexById(_matchid);
         Match storage _match = matches[_match_index];
         uint x = 0;
+        uint teamLoserSumMinusTaxes;
         if (_match.won == 0){
             require(_match.betsToTeam0[msg.sender] != 0);
-            x = _match.betsToTeam0[msg.sender] * _match.team1BetSum;
+            teamLoserSumMinusTaxes = _match.team1BetSum * _match.TAX;
+            x = _match.betsToTeam0[msg.sender] * teamLoserSumMinusTaxes;
             x = x / _match.team0BetSum;
             _match.betsToTeam0[msg.sender] = 0;
             msg.sender.transfer(x);
         }
         if (_match.won == 1) {
             require(_match.betsToTeam1[msg.sender] != 0);
-            x = _match.betsToTeam1[msg.sender] * _match.team1BetSum;
+            teamLoserSumMinusTaxes = _match.team0BetSum * _match.TAX;
+            x = _match.betsToTeam1[msg.sender] * teamLoserSumMinusTaxes;
             x = x / _match.team1BetSum;
-            _match.betsToTeam0[msg.sender] = 0;
+            _match.betsToTeam1[msg.sender] = 0;
             msg.sender.transfer(x);
         }
     }
