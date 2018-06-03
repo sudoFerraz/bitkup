@@ -19,12 +19,12 @@ contract BetsAccessControl {
         _;
     }
 
-    function setCEO(address _newCEO) public onlyCEO{
+    function setCEO(address _newCEO) external onlyCEO{
         require(_newCEO != address(0));
         ceoAddress = _newCEO;
     }
 
-    function setArbiter(address _newArbiter) public onlyArbiter {
+    function setArbiter(address _newArbiter) external onlyArbiter {
         require(_newArbiter != address(0));
         arbiterAddress = _newArbiter;
     }
@@ -43,11 +43,11 @@ contract BetsAccessControl {
         _;
     }
     
-    function pause() public onlyCEO whenNotPaused {
+    function pause() external onlyCEO whenNotPaused {
         paused = true;
     }
 
-    function unpause() public onlyCEO whenPaused {
+    function unpause() external onlyCEO whenPaused {
         paused = false;
     }
 

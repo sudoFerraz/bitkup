@@ -38,7 +38,7 @@ contract BetsBase is BetsAccessControl{
 
     Match[] matches;
 
-    function Create_Match(string _team0Name, string _team1Name) onlyCEO whenNotPaused returns (bytes32) {
+    function Create_Match(string _team0Name, string _team1Name) onlyCEO whenNotPaused {
         Match memory _match = Match({
             match_id: sha256(block.timestamp),
             team0Name: _team0Name,
