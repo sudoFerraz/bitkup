@@ -13,17 +13,7 @@ contract BetsCore is BetsBase{
         paused = true;
         ceoAddress = msg.sender;
         arbiterAddress = msg.sender;
-        // Starts paused
-   //     paused = true;
-        
-        // the creator of the contract is the initial CEO
-     //   ceoAddress = msg.sender;
-
-        // the creator of the contract is also the initial arbiter
-       // arbiterAddress = msg.sender;
-
     }
-
 //    function setNewAddress(address _v2Address) public onlyCEO whenPaused {
  //       newContractAddress = _v2Address;
   //      ContractUpgrade(_v2Address);
