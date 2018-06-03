@@ -59,9 +59,9 @@ contract BetsBase is BetsAccessControl{
         return sha256(document);
     }
 
-    function getMatch(uint _index) constant returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum) {
+    function getMatch(uint _index) constant returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum, bool _state, uint _won) {
         Match storage _match = matches[_index];
-        return (_match.team1Name, _match.team0Name, _match.match_id, _match.team0BetSum, _match.team1BetSum);
+        return (_match.team1Name, _match.team0Name, _match.match_id, _match.team0BetSum, _match.team1BetSum, _match.state, _match.won);
     
     }
 
@@ -103,6 +103,18 @@ contract BetsBase is BetsAccessControl{
 
     }
 
+    function getBetsBalance(bytes32 _match_id) public view returns(uint256, uint256) {
+        uint256 _match_index = getIndexById(_match_id);
+        Match storage _match = matches[_match_index];
+        uint balance0 = _match.betsToTeam0[msg.sender];
+        uint balance1 = _match.betsToTeam1[msg.sender];
+        return (balance0, balance1);
+    }
+
+    function getsMultiplier(bytes32 _match_id) public constant returns(uint256, uint256){
+
+    }
+
 
     function endBetsInMatch(bytes32 _matchid) onlyCEO whenNotPaused external {
         uint256 _match_index = getIndexById(_matchid);
@@ -125,6 +137,7 @@ contract BetsBase is BetsAccessControl{
         Match storage _match = matches[_match_index];
         uint x = 0;
         uint teamLoserSumMinusTaxes;
+        require(_match.won != 2);
         if (_match.won == 0){
             require(_match.betsToTeam0[msg.sender] != 0);
             teamLoserSumMinusTaxes = _match.team1BetSum * _match.TAX;
