@@ -30,7 +30,7 @@ contract BetsBase is BetsAccessControl{
         bool state;
         uint8 TAX;
         // 1 Team1, 0 Team0, 2 Not Ended
-        uint8 won;
+        uint256 won;
     
     }
 
@@ -38,7 +38,7 @@ contract BetsBase is BetsAccessControl{
 
     Match[] matches;
 
-    function Create_Match(string _team0Name, string _team1Name) returns (bytes32) {
+    function Create_Match(string _team0Name, string _team1Name) onlyCEO whenNotPaused returns (bytes32) {
         Match memory _match = Match({
             match_id: sha256(block.timestamp),
             team0Name: _team0Name,
@@ -46,7 +46,7 @@ contract BetsBase is BetsAccessControl{
             team0BetSum: 0,
             team1BetSum: 0,
             state: true,
-            TAX: 0.20,
+            TAX: 20,
             won: 2
         });
         uint256 newMatchIndex = matches.push(_match) - 1;
@@ -104,8 +104,7 @@ contract BetsBase is BetsAccessControl{
     }
 
 
-    // TODO onlyCEO
-    function endBetsInMatch(bytes32 _matchid) external {
+    function endBetsInMatch(bytes32 _matchid) onlyCEO whenNotPaused external {
         uint256 _match_index = getIndexById(_matchid);
         Match storage _match = matches[_match_index];
         assert(_match.state == true);
@@ -113,8 +112,7 @@ contract BetsBase is BetsAccessControl{
         BetsEnd(_matchid);
     }
     
-    // TODO onlyCEO
-    function endMatch(bytes32 _matchid, uint8 _won) external {
+    function endMatch(bytes32 _matchid, uint8 _won) onlyCEO whenNotPaused external {
         uint256 _match_index = getIndexById(_matchid);
         Match storage _match = matches[_match_index];
         assert(_match.state == false);
@@ -122,8 +120,7 @@ contract BetsBase is BetsAccessControl{
         MatchResolved(_matchid, _won);
     }
     
-//TODO make TAX
-    function withdrawRewards(bytes32 _matchid) external {
+    function withdrawRewards(bytes32 _matchid) whenNotPaused external {
         uint256 _match_index = getIndexById(_matchid);
         Match storage _match = matches[_match_index];
         uint x = 0;
