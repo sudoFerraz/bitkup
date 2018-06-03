@@ -9,7 +9,14 @@
 	DashboardController.$inject = ['$scope'];
 
 	function DashboardController($scope) {
-		console.log('u are in dashboard')
+
+		$scope.loadBetsPromise = new Promise((resolve, reject) => {
+			setTimeout(function () {
+				console.log('resolve')
+				resolve({})
+			}, 2000)
+		})
+
 	}
 
 })();

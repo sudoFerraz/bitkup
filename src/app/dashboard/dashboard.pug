@@ -1,5 +1,10 @@
 .bg-light.lter.b-b.wrapper-md
 	.row
 		.col-sm-6.col-xs-12
-			h1.m-n.font-thin.h3.text-black Dashboard
-			small.text-muted Página com um resumo das informações da Bitkup
+			h1.m-n.font-thin.h3.text-black All bets
+			small.text-muted {{web3.provider}} - {{web3.network.name}} ({{web3.account}})
+.bg-light.lter.b-b.wrapper-md(cg-busy="{promise: loadBetsPromise, message: 'Loading bets'}")
+	.row
+		.col-sm-6.col-xs-12
+			h1.m-n.font-thin.h3.text-black Just a test
+			small.text-muted Nothing more ...

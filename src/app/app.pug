@@ -36,20 +36,16 @@ aside#aside.app-aside.hidden-xs.bg-dark
 			nav.navi.clearfix(ui-nav='')
 				ul.nav
 					a(ui-sref="app.dashboard" ui-sref-active="active")
-						i.glyphicon.glyphicon-stats
-						span Início
-					a(ui-sref="app.eventtypes" ui-sref-active="active" ng-if="hasPermission('EVENTS_MANAGEMENT')")
-						i.glyphicon.glyphicon-check
-						span Tipos de eventos
-					a(ui-sref="app.categories" ui-sref-active="active" ng-if="hasPermission('CATEGORIES_MANAGEMENT')")
-						i.glyphicon.glyphicon-folder-open
-						span Categorias
-					a(ui-sref="app.users" ui-sref-active="active" ng-if="hasPermission('ADMIN_USERS_MANAGEMENT')")
-						i.glyphicon.glyphicon-user
-						span Usuários
+						i.fa.fa-money
+						span Bets
 
 div#content.app-content(role='main')
 	.app-content-body
 		.hbox.hbox-auto-xs.hbox-auto-sm
 			.col
-				ui-view
+				div#no-provider(ng-if="!web3.loaded")
+					.bg-danger.lter.b-b.wrapper-md
+						.row
+							.col-sm-12.col-xs-12
+								h1.m-n.font-thin.h3.text-white Please install MetaMask and log in to an account to continue.
+				ui-view(ng-if="web3.loaded")

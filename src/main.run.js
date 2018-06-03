@@ -6,10 +6,12 @@
 		.module('main')
 		.run(run);
 
-	run.$inject = [];
+	run.$inject = ['Web3Service'];
 
-	function run() {
-		console.log('main.run')
+	function run(Web3Service) {
+		Web3Service.load().then(function (r) {
+			console.log(r)
+		})
 	}
 
 })();

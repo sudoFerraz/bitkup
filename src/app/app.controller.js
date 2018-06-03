@@ -9,7 +9,7 @@
 	AppController.$inject = [];
 
 	function AppController() {
-		console.log('app')
+
 	}
 
 })();
