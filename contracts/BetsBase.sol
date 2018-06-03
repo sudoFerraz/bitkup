@@ -156,6 +156,14 @@ contract BetsBase is BetsAccessControl{
         }
     }
 
+    function kill() public onlyCEO {
+        require(msg.sender == ceoAddress);
+        selfdestruct(ceoAddress);
+    }
+
+
+    function() public payable{}
+
 
 }
 
