@@ -38,9 +38,9 @@ contract BetsBase is BetsAccessControl{
 
     Match[] matches;
 
-    function Create_Match(string _team0Name, string _team1Name) onlyCEO whenNotPaused {
+    function Create_Match(string _team0Name, string _team1Name) public onlyCEO whenNotPaused {
         Match memory _match = Match({
-            match_id: sha256(block.timestamp),
+            match_id: sha256(abi.encodePacked(block.timestamp)),
             team0Name: _team0Name,
             team1Name: _team1Name,
             team0BetSum: 0,
@@ -51,15 +51,12 @@ contract BetsBase is BetsAccessControl{
         });
         uint256 newMatchIndex = matches.push(_match) - 1;
         Matches_Index[_match.match_id] = newMatchIndex;
-        MatchCreation(_match.match_id);
+        emit MatchCreation(_match.match_id);
     }
 
 
-    function proofFor(string document) constant returns (bytes32) {
-        return sha256(document);
-    }
 
-    function getMatch(uint _index) constant returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum, bool _state, uint _won) {
+    function getMatch(uint _index) public view returns (string _team1Name, string _team0Name, bytes32 _matchId, uint _team0BetSum, uint _tem1BetSum, bool _state, uint _won) {
         Match storage _match = matches[_index];
         return (_match.team1Name, _match.team0Name, _match.match_id, _match.team0BetSum, _match.team1BetSum, _match.state, _match.won);
     
@@ -70,7 +67,7 @@ contract BetsBase is BetsAccessControl{
 
     }
 
-    function getIndexById(bytes32 _matchid) constant internal returns (uint256) {
+    function getIndexById(bytes32 _matchid) view internal returns (uint256) {
         uint256 Match_Index = Matches_Index[_matchid];
         return (Match_Index);
 
@@ -97,13 +94,13 @@ contract BetsBase is BetsAccessControl{
             _match.betsToTeam1[msg.sender] += msg.value;
             _match.team1BetSum += msg.value;
         }
-        NewBet(team0, msg.sender, msg.value);
+        emit NewBet(team0, msg.sender, msg.value);
 
         
 
     }
 
-    function getBetsBalance(bytes32 _match_id) public view returns(uint256, uint256) {
+    function getBetsBalanceByAddress(bytes32 _match_id) public view returns(uint256, uint256) {
         uint256 _match_index = getIndexById(_match_id);
         Match storage _match = matches[_match_index];
         uint balance0 = _match.betsToTeam0[msg.sender];
@@ -111,8 +108,12 @@ contract BetsBase is BetsAccessControl{
         return (balance0, balance1);
     }
 
-    function getsMultiplier(bytes32 _match_id) public constant returns(uint256, uint256){
-
+    function getsSumofBets(bytes32 _match_id) public view returns(uint256, uint256){
+        uint256 _match_index = getIndexById(_match_id);
+        Match storage _match = matches[_match_index];
+        uint balance0 = _match.team0BetSum;
+        uint balance1 = _match.team1BetSum;
+        return (balance0, balance1);
     }
 
 
@@ -121,7 +122,7 @@ contract BetsBase is BetsAccessControl{
         Match storage _match = matches[_match_index];
         assert(_match.state == true);
         _match.state = false;
-        BetsEnd(_matchid);
+        emit BetsEnd(_matchid);
     }
     
     function endMatch(bytes32 _matchid, uint8 _won) onlyCEO whenNotPaused external {
@@ -129,7 +130,7 @@ contract BetsBase is BetsAccessControl{
         Match storage _match = matches[_match_index];
         assert(_match.state == false);
         _match.won = _won;
-        MatchResolved(_matchid, _won);
+        emit MatchResolved(_matchid, _won);
     }
     
     function withdrawRewards(bytes32 _matchid) whenNotPaused external {
