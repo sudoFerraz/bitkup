@@ -1,0 +1,77 @@
+doctype html
+html
+	head
+
+		base(href="/")
+		meta(charset="UTF-8")
+		meta(name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width")
+		title Bitkup
+
+		//- Lib
+		link(rel="stylesheet" type="text/css" href="lib/bootstrap/dist/css/bootstrap.min.css")
+		link(rel="stylesheet" type="text/css" href="lib/jasny-bootstrap/dist/css/jasny-bootstrap.min.css")
+		link(rel="stylesheet" type="text/css" href="lib/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css")
+		link(rel="stylesheet" type="text/css" href="lib/angular-ui-tree/dist/angular-ui-tree.min.css")
+		link(rel='stylesheet' type="text/css" href="lib/ngToast/dist/ngToast.min.css")
+		link(rel="stylesheet" type="text/css" href='lib/angular-busy/dist/angular-busy.min.css')
+		link(rel="stylesheet" type="text/css" href="lib/angular-ui-grid/ui-grid.min.css")
+
+		//- Theme
+		link(rel='stylesheet' type='text/css' href='assets/theme/dist/css/app.css')
+		link(rel='stylesheet' type='text/css' href='assets/theme/dist/css/font.css')
+		link(rel='stylesheet' type='text/css' href='assets/theme/dist/css/font-awesome.min.css')
+
+		link(rel="stylesheet" href="index.css")
+
+		link(rel="stylesheet" type="text/css" href="app/dashboard/dashboard.css")
+		link(rel="stylesheet" type="text/css" href="app/app.css")
+
+	body(ng-app="main" ng-controller="MainController")
+
+		toast
+
+		div#app.app.app-header-fixed
+			ui-view
+
+		//- Angular
+		script(type="text/javascript" src='lib/api-check/dist/api-check.min.js')
+		script(type="text/javascript" src="lib/angular/angular.js")
+		script(type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js")
+		script(type="text/javascript" src="lib/angular-dpd/angular-dpd.js")
+		script(type="text/javascript" src='lib/angular-formly/dist/formly.min.js')
+		script(type="text/javascript" src="lib/angular-formly-templates-bootstrap/dist/angular-formly-templates-bootstrap.min.js")
+		script(type="text/javascript" src='lib/angular-sanitize/angular-sanitize.min.js')
+		script(type="text/javascript" src='lib/ngToast/dist/ngToast.min.js')
+		script(type="text/javascript" src='lib/angular-busy/dist/angular-busy.min.js')
+		script(type="text/javascript" src="lib/angular-ui-grid/ui-grid.js")
+		script(type='text/javascript' src='lib/checklist-model/checklist-model.js')
+
+		//- Core module
+		script(type="text/javascript" src="core/core.module.js")
+
+		//- Main module
+		script(type="text/javascript" src="main.module.js")
+		script(type="text/javascript" src="main.config.js")
+		script(type="text/javascript" src="main.run.js")
+		script(type="text/javascript" src="main.controller.js")
+
+		//- App module
+		script(type="text/javascript" src="app/app.module.js")
+		script(type="text/javascript" src="app/app.config.js")
+		script(type="text/javascript" src="app/app.controller.js")
+
+		//- Dashboard module
+		script(type="text/javascript" src="app/dashboard/dashboard.module.js")
+		script(type="text/javascript" src="app/dashboard/dashboard.config.js")
+		script(type="text/javascript" src="app/dashboard/dashboard.controller.js")
+
+
+		//- Libs
+		script(type="text/javascript" src="lib/jquery/dist/jquery.min.js")
+		script(type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.min.js")
+		script(type="text/javascript" src="lib/jasny-bootstrap/dist/js/jasny-bootstrap.min.js")
+		script(type="text/javascript" src="lib/angular-ui-tree/dist/angular-ui-tree.js")
+		script(type="text/javascript" src="lib/angular-bootstrap/ui-bootstrap-tpls.js")
+
+		//- Theme
+		script(type="text/javascript" src="assets/theme/dist/js/ui-toggle.js")
