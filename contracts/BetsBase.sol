@@ -100,13 +100,22 @@ contract BetsBase is BetsAccessControl{
 
     }
 
-    function getBetsBalance(bytes32 _match_id) public view returns(uint256, uint256) {
+    function getBetsBalanceByAddress(bytes32 _match_id) public view returns(uint256, uint256) {
         uint256 _match_index = getIndexById(_match_id);
         Match storage _match = matches[_match_index];
         uint balance0 = _match.betsToTeam0[msg.sender];
         uint balance1 = _match.betsToTeam1[msg.sender];
         return (balance0, balance1);
     }
+
+    function getsSumofBets(bytes32 _match_id) public view returns(uint256, uint256){
+        uint256 _match_index = getIndexById(_match_id);
+        Match storage _match = matches[_match_index];
+        uint balance0 = _match.team0BetSum;
+        uint balance1 = _match.team1BetSum;
+        return (balance0, balance1);
+    }
+
 
     function getsMultiplier(bytes32 _match_id) public view returns(uint256, uint256){
 
