@@ -11,7 +11,8 @@
   function Web3Service($rootScope, $window) {
 
     const load = () => {
-      return new Promise(async function (resolve, reject) {
+      return new Promise((resolve, reject) => {
+        
         let results
         let web3js
 
@@ -46,6 +47,7 @@
           }
 
           let accounts = web3js.eth.accounts;
+
           if (!accounts.length) {
             $rootScope.web3 = { loaded: false }
             reject(new Error('Make sure that you have logged in into an account to continue'))
@@ -67,6 +69,7 @@
           $rootScope.web3 = { loaded: false }
           reject(new Error('No provider found'))
         }
+
       })
     }
 

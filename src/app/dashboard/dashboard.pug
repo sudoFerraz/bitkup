@@ -1,10 +1,13 @@
 .bg-light.lter.b-b.wrapper-md
 	.row
 		.col-sm-6.col-xs-12
-			h1.m-n.font-thin.h3.text-black All bets
+			h1.m-n.font-thin.h3.text-black All matches
 			small.text-muted {{web3.provider}} - {{web3.network.name}} ({{web3.account}})
-.bg-light.lter.b-b.wrapper-md(cg-busy="{promise: loadBetsPromise, message: 'Loading bets'}")
-	.row
+.bg-light.lter.b-b.wrapper-md(cg-busy="{promise:loadMatchesPromise, message:'Loading matches'}")
+	.row(ng-if="!matches.length")
 		.col-sm-6.col-xs-12
-			h1.m-n.font-thin.h3.text-black Just a test
-			small.text-muted Nothing more ...
+			small.text-muted Loading matches...
+	.row(ng-if="matches.length" ng-repeat="match in matches")
+		.col-sm-6.col-xs-12
+			h1.m-n.font-thin.h3.text-black {{ match[0] }} x {{ match[1] }}
+			small.text-muted {{ match[2] }}

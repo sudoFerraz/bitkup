@@ -6,9 +6,9 @@
 		.module('main.app')
 		.controller('AppController', AppController);
 
-	AppController.$inject = [];
+	AppController.$inject = ['$rootScope'];
 
-	function AppController() {
+	function AppController($rootScope) {
 
 	}
 

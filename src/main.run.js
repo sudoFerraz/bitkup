@@ -9,9 +9,7 @@
 	run.$inject = ['Web3Service'];
 
 	function run(Web3Service) {
-		Web3Service.load().then(function (r) {
-			console.log(r)
-		})
+		Web3Service.load()
 	}
 
 })();
