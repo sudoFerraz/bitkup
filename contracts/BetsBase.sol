@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity 0.4.24;
 
 import "./BetsAccessControl.sol";
 
@@ -67,7 +67,7 @@ contract BetsBase is BetsAccessControl{
 
     }
 
-    function getIndexById(bytes32 _matchid) view internal returns (uint256) {
+    function getIndexById(bytes32 _matchid) internal view returns (uint256) {
         uint256 Match_Index = Matches_Index[_matchid];
         return (Match_Index);
 
@@ -100,7 +100,7 @@ contract BetsBase is BetsAccessControl{
 
     }
 
-    function getBetsBalanceByAddress(bytes32 _match_id) public view returns(uint256, uint256) {
+    function getBetsBalanceByAddress(bytes32 _match_id) external view returns(uint256, uint256) {
         uint256 _match_index = getIndexById(_match_id);
         Match storage _match = matches[_match_index];
         uint balance0 = _match.betsToTeam0[msg.sender];
@@ -108,7 +108,7 @@ contract BetsBase is BetsAccessControl{
         return (balance0, balance1);
     }
 
-    function getsSumofBets(bytes32 _match_id) public view returns(uint256, uint256){
+    function getsSumofBets(bytes32 _match_id) external view returns(uint256, uint256){
         uint256 _match_index = getIndexById(_match_id);
         Match storage _match = matches[_match_index];
         uint balance0 = _match.team0BetSum;
@@ -157,7 +157,7 @@ contract BetsBase is BetsAccessControl{
         }
     }
 
-    function kill() public onlyCEO {
+    function kill() external onlyCEO {
         require(msg.sender == ceoAddress);
         selfdestruct(ceoAddress);
     }
