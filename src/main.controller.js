@@ -9,7 +9,7 @@
   MainController.$inject = [];
 
   function MainController() {
-    console.log('main')
+
   }
 
 })();

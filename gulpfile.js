@@ -11,12 +11,13 @@ var paths = {
   js: ['./src/**/*.js'],
   assets: ['./src/assets/**/**'],
   dependencies: ['./bower.json', './package.json'],
-  dest: 'dist'
+  dest: 'dist',
+  contractsBuild: './build/contracts/*.json'
 };
 
-gulp.task('serve', ['buildHTML', 'buildCSS', 'buildJS', 'buildAssets', 'buildDepencendies', 'watch', 'live-server']);
+gulp.task('serve', ['buildHTML', 'buildCSS', 'buildJS', 'buildAssets', 'buildDepencendies', 'CopyContractsBuild', 'watch', 'live-server']);
 
-gulp.task('build', ['buildHTML', 'buildCSS', 'buildJS', 'buildAssets', 'buildDepencendies']);
+gulp.task('build', ['buildHTML', 'buildCSS', 'buildJS', 'buildAssets', 'buildDepencendies', 'CopyContractsBuild']);
 
 gulp.task('buildHTML', function() {
 
@@ -76,3 +77,7 @@ gulp.task('live-server', function() {
 			defaultFile: 'index.html'
 		}));
 });
+
+gulp.task('CopyContractsBuild', function() {
+  return gulp.src(paths.contractsBuild).pipe(gulp.dest(paths.dest+'/build/contracts/'))
+})
